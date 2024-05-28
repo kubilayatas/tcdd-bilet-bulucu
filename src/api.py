@@ -6,4 +6,4 @@ headers = {
 }
 
 def post_request(url, body):
-    return requests.post(url, json=body, headers=headers)
+    return requests.post(url, json=body, headers=headers, timeout=5)

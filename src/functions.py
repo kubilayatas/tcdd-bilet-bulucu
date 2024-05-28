@@ -36,13 +36,23 @@ def fetch_and_filter_journeys():
     }
 
     print(f"Checking for date: {formatted_date}")
-    response = post_request(sefer_url, body)
-    data = response.json()
+    try:
+        response = post_request(sefer_url, body)
+        data = response.json()
+    except response.exceptions.ConnectionError as errc:
+        print ("Error Connecting:",errc)
+    except:
+        print("Error occured, contuniueing...")
+    
 
     if data['cevapBilgileri']['cevapKodu'] == '000':
         for sefer in data['seferSorgulamaSonucList']:
             sefer_time = datetime.datetime.strptime(sefer['binisTarih'], "%b %d, %Y %I:%M:%S %p")
-            if config.check_specific_hour:
+            if config.check_after_thisTime:
+                specified_time = datetime.datetime.strptime(f"{config.date} {config.afterThisHour}", "%Y-%m-%d %H:%M")
+                if sefer_time.strftime("%H:%M") >= specified_time.strftime("%H:%M"):
+                    check_sefer(sefer)
+            elif config.check_specific_hour:
                 specified_time = datetime.datetime.strptime(f"{config.date} {config.hour}", "%Y-%m-%d %H:%M")
                 if sefer_time.strftime("%H:%M") == specified_time.strftime("%H:%M"):
                     check_sefer(sefer)
