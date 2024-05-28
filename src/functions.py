@@ -36,13 +36,9 @@ def fetch_and_filter_journeys():
     }
 
     print(f"Checking for date: {formatted_date}")
-    try:
-        response = post_request(sefer_url, body)
-        data = response.json()
-    except response.exceptions.ConnectionError as errc:
-        print ("Error Connecting:",errc)
-    except:
-        print("Error occured, contuniueing...")
+    
+    response = post_request(sefer_url, body)
+    data = response.json()
     
 
     if data['cevapBilgileri']['cevapKodu'] == '000':
