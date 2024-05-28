@@ -36,8 +36,13 @@ def fetch_and_filter_journeys():
     }
 
     print(f"Checking for date: {formatted_date}")
+    while(True):
+        response = post_request(sefer_url, body)
+        if (response == "Error_request"):
+            continue
+        else:
+            break
     
-    response = post_request(sefer_url, body)
     data = response.json()
     
 
@@ -62,7 +67,7 @@ def check_sefer(sefer):
     for vagon in sefer['vagonTipleriBosYerUcret']:
         for vagon_detail in vagon['vagonListesi']:
             vagon_sira_no = vagon_detail['vagonSiraNo']
-            print(f"Checking for vagon: {vagon_sira_no}")
+            #print(f"Checking for vagon: {vagon_sira_no}")
             check_specific_seats(sefer['seferId'], vagon_sira_no, sefer['trenAdi'], sefer['binisTarih'])
 
 
@@ -77,7 +82,15 @@ def check_specific_seats(seferId, vagon_sira_no, tren_adi, binis_tarih):
         "InisIst": config.inis_istasyon_adi
     }
     
-    response = post_request(vagon_url, body)
+    #response = post_request(vagon_url, body)
+    #data = response.json()
+    while(True):
+        response = post_request(vagon_url, body)
+        if (response == "Error_request"):
+            continue
+        else:
+            break
+    
     data = response.json()
 
     if data['cevapBilgileri']['cevapKodu'] == '000':
@@ -87,4 +100,5 @@ def check_specific_seats(seferId, vagon_sira_no, tren_adi, binis_tarih):
                     print(f"Available seat: {seat['koltukNo']} in Wagon {vagon_sira_no}")
                     send_email(tren_adi, binis_tarih, vagon_sira_no, seat['koltukNo'])
                 else: # Handicapped
-                    print(f"Available handicapped seat: {seat['koltukNo']} in Wagon {vagon_sira_no}")
+                    #print(f"Available handicapped seat: {seat['koltukNo']} in Wagon {vagon_sira_no}")
+                    ""

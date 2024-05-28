@@ -8,6 +8,7 @@ headers = {
 def post_request(url, body):
     try:
         response = requests.post(url, json=body, headers=headers, timeout=5)
+        return response
     except:
         print("Error occured, trying to continue...")
-    return response
+        return "Error_request"

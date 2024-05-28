@@ -10,6 +10,12 @@ check_after_thisTime = True
 hour = "08:02"
 afterThisHour = "17:00"
 
+# Verbose   0: only show available seats
+#           1: show processed vagons too
+#           2: show handicapped seats too
+#           3: show everything
+verbose = 0
+
 # Email details (replace with the email address (must be OUTLOOK) and password that will send notification
 # and email addres that will be notified)
 email_address = "kubilayatas@hotmail.com" 

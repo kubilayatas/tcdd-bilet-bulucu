@@ -19,4 +19,4 @@ def send_email(tren_adi, binis_tarih, vagon_no, seat_no):
     text = message.as_string()
     server.sendmail(config.email_address, config.destination_address, text)
     server.quit()
-    print(f"Email sent for Seat {seat_no} in Wagon {vagon_no} of {tren_adi} on {binis_tarih}.")
+    if config.verbose >= 0: print(f"Email sent for Seat {seat_no} in Wagon {vagon_no} of {tren_adi} on {binis_tarih}.")
